@@ -33,6 +33,8 @@ class ProductManager {
     // AGREGA EL PRODUCTO 
     async addProduct(title, description, price, thumbnail, code, stock) {
         
+        const product = await this.getProducts();
+        
         const newProduct = {
             // id: this.#acc, 
             id: this.product.length+1,
@@ -48,8 +50,7 @@ class ProductManager {
             throw new Error("missing information");
         }
 
-        // CHECKEANDO QUE NO SE REPITA EL CODE    
-        const product = await this.getProducts();
+        // CHECKEANDO QUE NO SE REPITA EL CODE       
         const checkCode = product.some((p) => p.code === code);
 
         if (checkCode) {
@@ -95,7 +96,7 @@ class ProductManager {
 
         } else {
             let eraser = product.filter((p) => p.id !== prodId);
-            fs.promises.writeFile(this.#path, JSON.stringify(eraser));
+           await fs.promises.writeFile(this.#path, JSON.stringify(eraser));
 
         }
     }
