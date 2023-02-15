@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 class ProductManager {
-    #accId = 0;
+    // #accId = 0;
     #path = "";
 
     constructor(path) {
@@ -32,9 +32,10 @@ class ProductManager {
     }
     // AGREGA EL PRODUCTO 
     async addProduct(title, description, price, thumbnail, code, stock) {
-
+        
         const newProduct = {
-            id: this.#accId,
+            // id: this.#acc, 
+            id: this.product.length+1,
             title,
             description,
             price,
@@ -54,8 +55,8 @@ class ProductManager {
         if (checkCode) {
             throw new Error("product code already exist");
         } else {
-            fs.promises.writeFile(this.#path, JSON.stringify([...product, newProduct]));
-            this.#accId++;
+           await fs.promises.writeFile(this.#path, JSON.stringify([...product, newProduct]));
+            // this.#accId++;
         }
 
     }
@@ -111,9 +112,9 @@ async function main() {
     const manager = new ProductManager('./products.json');
 
     // console.log(await manager.getProducts()); // []
-    //   await manager.addProduct("producto prueba", "Este es un producto prueba", 200, "sin imagen", "abc123456", 25);
-    //   await manager.addProduct("producto prueba", "Este es un producto prueba", 200, "sin imagen", "abc12345", 25);
-    //   await manager.addProduct("producto prueba", "Este es un producto prueba", 200, "sin imagen", "abc1234", 25);
+      await manager.addProduct("producto prueba", "Este es un producto prueba", 200, "sin imagen", "abc123456", 25);
+      await manager.addProduct("producto prueba", "Este es un producto prueba", 200, "sin imagen", "abc12345", 25);
+      await manager.addProduct("producto prueba", "Este es un producto prueba", 200, "sin imagen", "abc1234", 25);
     //   await manager.deleteProduct(1);
     //   console.log(await manager.getProducts()); // []
     //   console.log(await manager.getProductById(0));
